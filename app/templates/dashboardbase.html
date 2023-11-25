@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{% endblock title %}</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha384-MC2R+FgLFAeLZS1qLXU5C3MI5MqrzLRJ1l2uN2FaZl6zBXCW1/VK/5LK1I6nPyDE" crossorigin="anonymous">
+    <link rel="stylesheet" href="{{ url_for('static', filename='stylesheet.css') }}">
+</head>
+<body>
+
+
+    {# the button for the sidebar#}
+    <button class="btn btn-bordered" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasScrolling" aria-controls="offcanvasScrolling">
+        <img class="menu-btn" src="{{ url_for('static', filename='img/menu.png') }}" alt="Menu Icon">
+    </button>
+
+    {# add sidebar #}
+    <div class="offcanvas offcanvas-start bg-dark" data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1" id="offcanvasScrolling" aria-labelledby="offcanvasScrollingLabel">
+        <div class="offcanvas-header">
+            <h2 class="offcanvas-title text-light text-center" id="offcanvasScrollingLabel">Menu</h2>
+            <button type="button" class="btn-close btn-light-custom" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+            <ul class="sidebar-options">
+                <li><a href="{{ url_for('unroasted') }}">unroasted coffee</a></li>
+                <li><a href="{{ url_for('roasted') }}">roasted coffee</a></li>
+                <li><a href="{{ url_for('dashboard') }}">dashboard</a></li>
+                <li><a href="{{ url_for('freq_clients') }}">frequent clients</a></li>
+            </ul>
+        </div>
+    </div>
+
+    
+    
+    <form action="{{ url_for('auth.logout') }}" method="post">
+        <button class="right-corner">
+            <p class="sign-out text-light">sign out</p>
+        </button>
+    </form>
+    
+
+    {% block content %}
+
+    {% endblock content %}
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</body>
+</html>

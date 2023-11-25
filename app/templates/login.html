@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+    {% if error_message %}        
+        <div class="mb-3 warning bg-danger text-light text-center">
+            <p>{{ error_message }}</p>
+        </div>
+    {% endif %}
+
+    <div class="container mt-5">
+        <div class="card shadow-sm p-3 mb-5 bg-white rounded">
+            <h2 class="text-center mb-4">Login</h2>
+
+            <form method="post" action="{{ url_for('auth.login') }}" class="d-flex flex-column align-items-center">
+                <div class="mb-3">
+                    <label for="username" class="form-label">Username</label>
+                    <input type="text" class="form-control" name="username" id="username" required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="password" class="form-label">Password</label>
+                    <input type="password" class="form-control" name="password" id="password" required>
+                </div>
+
+                <button type="submit" class="btn btn-coffee btn-block text-light">Login</button>
+            </form>
+        </div>
+    </div>
+
+{% endblock %}
+

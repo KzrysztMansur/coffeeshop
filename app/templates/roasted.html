@@ -1,0 +1,185 @@
+{% extends "dashboardbase.html" %}
+
+{% block title %}data{% endblock title %}
+
+{% block content %}
+    {# ERROR MESSAGE#}
+    {% if error_message %}
+    <div class="mb-3 warning bg-danger text-light text-center">
+        <p>{{ error_message }}</p>
+    </div>
+    {% endif %}
+    {# SUCCESS MESSAGE#}
+    {% if success_message %}
+        <div class="mb-3 warning bg-success text-light text-center">
+            <p>{{ success_message }}</p>
+        </div>
+    {% endif %}
+    <div class="data-tables d-flex flex-column align-items-center">
+        <h1 class="mb-5">Roasted Coffee</h1>
+        <!-- Button to open the modal -->
+        <button type="button" class="btn btn-coffee mb-4" data-toggle="modal" data-target="#exampleModal">
+            Add Coffee
+        </button>
+          
+          <!-- Modal -->
+          <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <form action=" {{ url_for('add_roasted_coffee') }} " method="post">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Adding a purchase</h5>
+                            <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close">
+                                
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="mb-3">
+                                <label for="user" class="form-label">Name</label>
+                                <input type="text" class="form-control" name="name" id="name" required>
+                            </div>
+                
+                            <div class="mb-3">
+                                <label for="amount" class="form-label">Amount (kg)</label>
+                                <input type="number" class="form-control" name="amount" id="amount" required>
+                            </div>
+                                
+                            <div class="mb-3">
+                                <label for="date-of-arrival" class="form-label">Date of roasting</label>
+                                <input type="date" class="form-control" name="date-of-arrival" id="date-of-arrival" required>
+                            </div> 
+
+                            <div class="mb-3">
+                                <label for="roasting-level" class="form-label">Roasting level</label>
+                                <select class="form-select" name="roasting-level" id="roasting-level" required>
+                                    <option value="" disabled selected>Select roasting level</option>
+                                    <option value="light roast">Light roast</option>
+                                    <option value="medium roast">Medium roast</option>
+                                    <option value="medium dark roast">Medium dark roast</option>
+                                    <option value="dark roast">dark roast</option>
+                                </select>
+                            </div> 
+
+                            <div class="mb-3">
+                                <label for="order-identification" class="form-label">order identification</label>
+                                <input type="text" class="form-control" name="order-identification" id="order-identification" required>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                            <button type="submit" class="btn btn-coffee">Save</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <table class="mb-4">
+            <tr class="bg-dark text-light">
+                <th>coffee name</th>
+                <th>amount (kg)</th>
+                <th>roasting date</th>
+                <th>roasting level</th>
+                <th>order id</th>
+                <th class="fluid ">edit/delete</th>
+            </tr>
+
+            {% if roasted_coffee_list %}
+                {% for coffee in roasted_coffee_list %}
+                    <tr>
+                        <th>{{coffee.name}}</th>
+                        <th>{{coffee.amount}}</th>
+                        <th>{{coffee.roasting_date}}</th>
+                        <th>{{coffee.roasting_level}}</th>
+                        <th>{{coffee.order_number}}</th>
+                        
+                        <th>
+                            <!-- Edit button in the table row -->
+                            <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#editModal{{ coffee.id }}">edit</button>
+                            <!-- edit Modal -->
+                            <div class="modal fade" id="editModal{{ coffee.id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <form action="{{ url_for('update_roasted_coffee', coffee_id=coffee.id) }}" method="post">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="exampleModalLabel">Adding a purchase</h5>
+                                                <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close">
+                                                    
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <div class="mb-3">
+                                                    <label for="user" class="form-label">Name</label>
+                                                    <input type="text" class="form-control" name="name" id="name" placeholder="{{coffee.name}}" required>
+                                                </div>
+                                    
+                                                <div class="mb-3">
+                                                    <label for="amount" class="form-label">Amount (kg)</label>
+                                                    <input type="number" class="form-control" name="amount" id="amount" placeholder="{{coffee.amount}}" required>
+                                                </div>
+                                                    
+                                                <div class="mb-3">
+                                                    <label for="roasting-date" class="form-label">Date of roasting</label>
+                                                    <input type="date" class="form-control" name="roasting-date" id="roasting-date" required>
+                                                </div> 
+                    
+                                                <div class="mb-3">
+                                                    <label for="roasting-level" class="form-label">Roasting level</label>
+                                                    <select class="form-select" name="roasting-level" id="roasting-level" required>
+                                                        <option value="" disabled selected>Select roasting level</option>
+                                                        <option value="light roast">Light roast</option>
+                                                        <option value="medium roast">Medium roast</option>
+                                                        <option value="medium dark roast">Medium dark roast</option>
+                                                        <option value="dark roast">dark roast</option>
+                                                    </select>
+                                                </div> 
+                    
+                                                <div class="mb-3">
+                                                    <label for="order-identification" class="form-label">order identification</label>
+                                                    <input type="text" class="form-control" name="order-identification" id="order-identification" placeholder="{{coffee.order_number}}" required>
+                                                </div>   
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                                                <button type="submit" class="btn btn-coffee">Save</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteModal{{ coffee.id }}">delete</button>
+                            <!-- Delete Confirmation Modal -->
+                            <div class="modal fade" id="deleteModal{{ coffee.id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel">Confirm Deletion</h5>
+                                            <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <form action="{{ url_for('delete_roasted_coffee', coffee_id=coffee.id) }}" method="post">
+                                                <div class="mb-3">
+                                                    <label for="amount" class="form-label">Admin password</label>
+                                                    <input type="password" class="form-control" name="adminPassword" required>
+                                                    <button type="submit" class="btn btn-danger mt-3">Delete</button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- End of the Modal-->
+                        </th>
+                    </tr>
+                {% endfor %}
+            {% else %}
+                <div class="mb-3 bg-light text-secondary text-center">
+                    <p>unable to load table</p>
+                </div>
+            {% endif %}
+        </table>
+
+    </div>
+
+{% endblock content %}

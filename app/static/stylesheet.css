@@ -1,0 +1,136 @@
+body{
+    margin: 2%;
+    background-color: #f8f9fa;
+}
+
+button{
+    justify-content: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 30px;
+    font-size: 70px;
+}
+
+h2 {
+    text-align: center;
+}
+
+table {
+    border-radius: 10px;
+}
+
+table, th, td {
+    border: 1.5px solid rgb(91, 91, 91);
+    
+}
+
+th {
+    width: 8%;
+    text-align: center;
+    align-items: center;
+    height: 60px;
+}
+
+.warning {
+    background-color: rgb(241, 9, 9);
+    color: #f8f9fa;
+    text-align: center;
+}
+
+.container {
+    max-width: 400px;
+}
+
+.card {
+    border: none;
+}
+
+.btn-coffee {
+    background-color: rgb(16, 14, 19);
+    border: none;
+    color: #f8f9fa;
+}
+
+.btn-coffee:hover {
+    background-color: rgb(0, 0, 0);
+    color: #f8f9fa;
+}
+
+.menu-btn {
+    background-color: #f8f9fa; 
+    height: 50px;
+    width: 50px;
+}
+
+/* Custom CSS to make the close button light */
+.btn-light-custom {
+    color: #f8f9fa !important; /* Light color - adjust as needed */
+    background-color: #f8f9fa !important;
+
+}
+
+.sidebar-options {
+    list-style: none; /* Remove bullets */
+    padding: 0; /* Remove default padding */
+}
+
+.sidebar-options li {
+    margin-bottom: 1rem; /* Adjust the margin as needed */
+    margin-left: 5%;
+}
+
+.sidebar-options li a {
+    text-decoration: none; /* Remove underlines */
+    color: #f8f9fa;; /* Use the default text color */
+
+}
+
+.right-corner {
+    position: absolute;
+    top: 30px;
+    right: 30px;
+    background-color: rgb(16, 14, 19);
+    color: #f8f9fa;
+    border: none;
+    border-radius: 10px; 
+    padding: 10px 10px; 
+    height: 30px;
+    width: 90px;
+}
+
+.sign-out{
+    margin: 0;
+}
+
+.chart-container {
+    text-align: center;  /* Center the text within the container */
+    
+}
+
+.chart {
+    margin-right: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 10%;
+    
+}
+
+.graph {
+    display: inline-block;  /* Display charts inline */
+    margin-left: 20px;      /* Add some margin between charts */
+    width: 100%;
+    max-width: 700px;
+}
+
+.data-tables {
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+}
+

@@ -1,0 +1,161 @@
+{% extends "dashboardbase.html" %}
+
+{% block title %}{% endblock title %}
+
+{% block content %}  
+    <h1>Dashboard</h1>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-6 mb-4">
+                <!-- Doughnut Chart -->
+                <div class="card h-100 d-flex flex-column">
+                    <div class="card-body">
+                        <h2>Most sold</h2>
+                        <canvas id="doughnutChart" class="graph"></canvas>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 mb-4">
+                <!-- Bar Chart -->
+                <div class="card">
+                    <div class="card h-100 d-flex flex-column">
+                        <h2>Least coffee in storage</h2>
+                        <div class="chart">
+                            <canvas id="barChart" class="graph" style="width:100%;max-width:700px"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- CHARTS DATA -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            var topFiveSoldData = JSON.parse('{{ top_five_sold|default('[]')|safe }}');
+            
+            // Doughnut Chart
+            //console.log('topFiveSoldData:', topFiveSoldData); // Log the data to the console
+            //console.log('Array.isArray(topFiveSoldData):', Array.isArray(topFiveSoldData.data)); // Log whether it's an array
+            //console.log('topFiveSoldData.length:', topFiveSoldData.data.length); // Log the length of the array
+
+            // Calculate percentages
+            var totalAmount = topFiveSoldData.data.reduce((sum, entry) => sum + entry.amount_sold, 0);
+            var percentages = topFiveSoldData.data.map(entry => ((entry.amount_sold / totalAmount) * 100).toFixed(2));
+
+        
+
+            // Check if topFiveSoldData is an array
+            if (Array.isArray(topFiveSoldData.data) && topFiveSoldData.data.length > 0){
+                // Doughnut Chart
+                var doughnutCtx = document.getElementById('doughnutChart').getContext('2d');
+                var doughnutData = {
+                    labels: topFiveSoldData.data.map(entry => entry.name),
+                    datasets: [{
+                        data: percentages,
+                        backgroundColor: [
+                            'rgba(100, 72, 60, 0.7)',
+                            'rgba(168, 112, 78, 0.7)',
+                            'rgba(150 ,113 ,23, 0.7)',
+                            'rgba(229, 183, 59, 0.7)',
+                            'rgba(210, 105, 30, 0.7)',
+                        ],
+                        hoverBackgroundColor: [
+                            'rgba(100, 72, 60, 1)',
+                            'rgba(168, 112, 78, 1)',
+                            'rgba(150 ,113 ,23, 1)',
+                            'rgba(229, 183, 59, 1)',
+                            'rgba(210, 105, 30, 1)',
+                        ]
+                    }]
+                };
+
+                // Create Doughnut Chart
+                var doughnutChart = new Chart(doughnutCtx, {
+                    type: 'doughnut',
+                    data: doughnutData,
+                    options: {
+                        tooltips: {
+                            callbacks: {
+                                label: function (tooltipItem, data) {
+                                    var dataset = data.datasets[tooltipItem.datasetIndex];
+                                    var currentValue = dataset.data[tooltipItem.index];
+                                    var percentage = currentValue + "%";
+                                    return percentage;
+                                }
+                            }
+                        }
+                    }
+                });
+            } else {
+                console.error('Top five sold data is undefined or empty.');
+            }
+
+            //var topFiveSoldData = JSON.parse('{{ top_five_sold|default('[]')|safe }}');
+            // BAR CHART
+            var leastThreeInStock = JSON.parse('{{ least_in_stock|default('[]')|safe }}');
+
+            
+            var barCtx = document.getElementById('barChart').getContext('2d');
+            console.log('leastThreeInStock:', leastThreeInStock);
+
+            if (Array.isArray(leastThreeInStock.data)) {
+                var labels = leastThreeInStock.data.map(entry => entry.name);
+                var roastedData = leastThreeInStock.data.map(entry => entry.amountRoasted);
+                var unroastedData = leastThreeInStock.data.map(entry => entry.amountUnroasted);
+
+                var barCtx = document.getElementById('barChart').getContext('2d');
+            
+                var barData = {
+                    labels: labels,
+                    datasets: [
+                    {
+                        label: 'Unroasted',
+                        data: unroastedData,
+                        backgroundColor: 'rgba(148, 166, 23, 0.5)',
+                        borderColor: 'rgba(148, 166, 23, 1)',
+                        borderWidth: 1,
+                        stack: 0
+                    },
+                    {
+                        label: 'Roasted',
+                        data: roastedData,
+                        backgroundColor: 'rgba(111, 78, 55, 0.5)',
+                        borderColor: 'rgba(111, 78, 55, 1)',
+                        borderWidth: 1,
+                        stack: 0
+                    }]
+                };
+            
+                var barOptions = {
+                    scales: {
+                        x: {
+                            stacked: true, // Enable stacking on the x-axis
+                        },
+                        y: {
+                            stacked: true, // Enable stacking on the y-axis
+                            beginAtZero: true
+                        }
+                    },
+                    responsive: true
+                };
+            
+                var barChart = new Chart(barCtx, {
+                    type: 'bar',
+                    data: barData,
+                    options: barOptions
+                });
+            } else {
+                console.error('Least three in stock data is not an array.');
+            }
+
+
+            
+        })
+    </script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    
+{% endblock content %}
