@@ -138,7 +138,6 @@ pure-eval==0.2.2
 pyasn1==0.5.0
 pyasn1-modules==0.3.0
 pycparser==2.21
-pygame==2.4.0
 Pygments==2.15.1
 PyMySQL==1.1.0
 pyparsing==3.1.0
@@ -150,7 +149,7 @@ python-engineio==4.4.1
 python-json-logger==2.0.7
 python-socketio==5.8.0
 pytz==2023.3.post1
-pywin32==306
+pywin32==302
 pywinpty==2.0.11
 PyYAML==6.0.1
 pyzmq==25.1.0
