@@ -1,16 +1,19 @@
+
 """
 HERE are all the main components of the app
 and all the critical information is saved or edited like the 
 """
 from flask import Flask
 from flask_bcrypt import Bcrypt
+import os
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site.db'
+#app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("DATABASE_URL")
+app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql://coffeenventory_user:YlwgdNEoYahJzpTpmk3GFNZn2SFDKWeO@dpg-clvrh2la73kc73bsj4pg-a.oregon-postgres.render.com/coffeenventory"
+#postgresql://coffeenventory_user:YlwgdNEoYahJzpTpmk3GFNZn2SFDKWeO@dpg-clvrh2la73kc73bsj4pg-a.oregon-postgres.render.com/coffeenventory
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SECRET_KEY'] = 'WEBVBWEUC93CB2EOCIQNC9823'
 app.config['ENV'] = 'production'
-
 
 
 from .models import db, User, UnroastedCoffee, RoastedCoffee
@@ -27,7 +30,7 @@ with app.app_context():
         db.session.begin()
 
         # Your database operations here
-        new_user = User(username='###', password='###')
+        new_user = User(username='Cecilia1795', password='CR1795!')
         db.session.add(new_user)
         # Commit the transaction
         db.session.commit()
@@ -39,7 +42,6 @@ with app.app_context():
         # Close the transaction
         db.session.close()
 """
-
 
 """
 with app.app_context():
