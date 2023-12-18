@@ -149,8 +149,8 @@ python-engineio==4.4.1
 python-json-logger==2.0.7
 python-socketio==5.8.0
 pytz==2023.3.post1
-pywin32==302
-pywinpty==2.0.11
+pywin32==302;platform_system == "Windows"
+pywinpty==2.0.11;platform_system == "Windows"
 PyYAML==6.0.1
 pyzmq==25.1.0
 ratelim==0.1.6
