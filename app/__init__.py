@@ -6,7 +6,7 @@ from flask import Flask
 from flask_bcrypt import Bcrypt
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql://coffeenventory_user:YlwgdNEoYahJzpTpmk3GFNZn2SFDKWeO@dpg-clvrh2la73kc73bsj4pg-a.oregon-postgres.render.com/coffeenventory"
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SECRET_KEY'] = 'WEBVBWEUC93CB2EOCIQNC9823'
 app.config['ENV'] = 'production'
